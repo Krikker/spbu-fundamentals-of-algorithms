@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
+from collections import deque
 
 import yaml
 
@@ -20,23 +21,55 @@ class BinaryTree:
     def empty(self) -> bool:
         return self.root is None
 
-    def zigzag_level_order_traversal(self) -> list[Any]:
+    def zigzag_level_order_traversal(self) -> list[list[Any]]:
+        if not self.root:
+            return []
 
-        ##########################
-        ### PUT YOUR CODE HERE ###
-        ##########################
+        levels = []
+        q = deque()
+        q.append(self.root)
+        reverse = False
 
-        pass
+        while q:
+            level_size = len(q)
+            level = []
 
+            for i in range(level_size):
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
 
-def build_tree(list_view: list[Any]) -> BinaryTree:
-    bt = BinaryTree()
+                level.append(node.key)
 
-    ##########################
-    ### PUT YOUR CODE HERE ###
-    ##########################
+            if reverse:
+                level = level[::-1]
 
-    pass
+            reverse = not reverse
+            levels.append(level)
+
+        return levels
+
+    def build_tree(self, list_view: list[Any]) -> BinaryTree:
+        bt = BinaryTree()
+
+        if not list_view:
+            return bt
+
+        nodes = [None if val is None else Node(val) for val in list_view]
+        children = nodes[::-1]
+
+        bt.root = children.pop()
+
+        for node in nodes:
+            if node:
+                if children:
+                    node.left = children.pop()
+                if children:
+                    node.right = children.pop()
+
+        return bt
 
 
 if __name__ == "__main__":
@@ -47,11 +80,11 @@ if __name__ == "__main__":
     # Avoid recursive traversal!
 
     with open(
-        "practicum_6/homework/binary_tree_zigzag_level_order_traversal_cases.yaml", "r"
+        "binary_tree_zigzag_level_order_traversal_cases.yaml", "r"
     ) as f:
         cases = yaml.safe_load(f)
 
     for i, c in enumerate(cases):
-        bt = build_tree(c["input"])
+        bt = BinaryTree().build_tree(c["input"])
         zz_traversal = bt.zigzag_level_order_traversal()
         print(f"Case #{i + 1}: {zz_traversal == c['output']}")
