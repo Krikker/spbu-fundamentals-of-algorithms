@@ -68,3 +68,9 @@ Plan:
 
 Homework:
 1. `convex_bucket.py`: implement a convex hull algorithm constructing only the lower part of a convex hull which would "hold" all the points if they fell due to the gravity.
+
+## Practicum 10
+
+Cubic spline: http://getsomemath.ru/subtopic/computational_mathematics/approximation_theory/local_interpolation
+
+LU: http://getsomemath.ru/subtopic/computational_mathematics/numerical_linear_algebra/gauss_methods

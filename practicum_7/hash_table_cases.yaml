@@ -1,0 +1,18 @@
+- input:
+    max_table_size: 4
+    ops:
+      - op: "insert"
+        key: 0
+        data: "abc"
+      - op: "insert"
+        key: 1
+        data: "def"
+      - op: "insert"
+        key: 2
+        data: "qwe"
+      - op: "insert"
+        key: 3
+        data: "rty"
+      - op: "remove"
+        key: 1
+  output: ["f", "e", "d", "b", "a", "0", "1"]
